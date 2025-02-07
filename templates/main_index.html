@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Malaria Prediction Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <style>
+        body {
+            text-align: center;
+            margin-top: 50px;
+            font-family: Arial, sans-serif;
+        }
+        .btn {
+            margin: 20px;
+        }
+        .intro-text {
+            margin-top: 30px;
+            font-size: 18px;
+            color: #555;
+        }
+        .logo {
+            width: 320px;
+            height: auto;
+        }
+        .btn-container {
+            margin-top: 40px;
+        }
+        .features {
+            margin-top: 20px;
+            font-size: 16px;
+            color: #333;
+            text-align: left;
+            display: inline-block;
+            max-width: 600px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <!-- Logo -->
+        <img src="{{ url_for('static', filename='images/eHA-logo-blue_320x132.png') }}" alt="eHealth Africa Logo" class="logo">
+    </div>
+    <h1>Welcome to the Malaria Prediction Portal</h1>
+    <p class="intro-text">
+        This portal provides insights into malaria prediction using Machine Learning models. 
+        Choose an option below to explore predictions for clinical or non-clinical malaria cases.
+    </p>
+
+
+
+    <div class="btn-container">
+        <!-- Buttons to navigate to the specific prediction apps -->
+        <a href="http://127.0.0.1:5001" class="btn btn-primary btn-lg">Clinical Malaria Prediction</a>
+        <a href="http://127.0.0.1:5002" class="btn btn-secondary btn-lg">Non-Clinical Malaria Prediction</a>
+    </div>
+    <!-- Features Section -->
+    <div class="features">
+        <h3>Prediction Features</h3>
+        <p>
+            <strong>Clinical Malaria Prediction:</strong> Uses symptoms such as chill/cold, headache, fever, generalized body pain, 
+            abdominal pain, loss of appetite, joint pain, vomiting, nausea, and diarrhea for predictions.
+        </p>
+        <p>
+            <strong>Non-Clinical Malaria Prediction:</strong> Utilizes environmental factors like Rainfall, Land Surface Temperature (LST), 
+            and Relative Humidity for predictions.
+        </p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,119 @@
+/* Basic styling for the application */
+body {
+    font-family: Arial, sans-serif;
+    max-width: 900px;
+    margin: auto;
+    padding: 20px;
+    background-color: #f4f7fc;
+    color: #333;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.logo-container img {
+    max-width: 150px;
+    margin-bottom: 10px;
+}
+
+h1 {
+    font-size: 2.5em;
+    color: #333;
+}
+
+h2 {
+    margin-top: 20px;
+    font-size: 1.8em;
+    color: #4CAF50;
+}
+
+main {
+    margin-top: 20px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 800px;
+    margin-bottom: 20px;
+}
+
+.symptom {
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;  /* Added to allow wrapping of buttons */
+}
+
+label {
+    font-size: 1.2em;
+    width: 40%;  /* Adjust width for labels to make space for buttons */
+    margin-right: 10px;  /* Add space between label and button */
+}
+
+button {
+    padding: 8px 15px;
+    font-size: 1.2em;
+    margin: 5px;
+    border: none;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+    width: auto;
+}
+
+button:hover {
+    background-color: #f1f1f1;
+}
+
+button.active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.submit-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    font-size: 1.2em;
+    border-radius: 6px;
+    width: 100%;
+    cursor: pointer;
+    margin-top: 20px; /* Add space before the submit button */
+}
+
+.submit-btn:hover {
+    background-color: #45a049;
+}
+
+.results {
+    text-align: center;
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+footer {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 1em;
+    color: #777;
+}
+
+footer p {
+    margin: 5px 0;
+}

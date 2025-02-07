@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Malaria Prediction Interface</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="{{ url_for('static', filename='images/eHA-logo-blue_320x132.png') }}" alt="Logo" class="logo">
+        </div>
+        <h1>Malaria Prediction Interface</h1>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="form-container">
+                <h2>Select Symptoms</h2>
+                <form id="symptomForm">
+                    <div class="symptom">
+                        <label for="chill_cold">Chill/Cold:</label>
+                        <button type="button" onclick="setSymptom('chill_cold', true)" class="symptom-btn">Yes</button>
+                        <button type="button" onclick="setSymptom('chill_cold', false)" class="symptom-btn">No</button>
+                    </div>
+                    <div class="symptom">
+                        <label for="headache">Headache:</label>
+                        <button type="button" onclick="setSymptom('headache', true)" class="symptom-btn">Yes</button>
+                        <button type="button" onclick="setSymptom('headache', false)" class="symptom-btn">No</button>
+                    </div>
+                    <div class="symptom">
+                        <label for="fever">Fever:</label>
+                        <button type="button" onclick="setSymptom('fever', true)" class="symptom-btn">Yes</button>
+                        <button type="button" onclick="setSymptom('fever', false)" class="symptom-btn">No</button>
+                    </div>
+                    <div class="symptom">
+                        <label for="generalized_body_pain">Generalized Body Pain:</label>
+                        <button type="button" onclick="setSymptom('generalized_body_pain', true)" class="symptom-btn">Yes</button>
+                        <button type="button" onclick="setSymptom('generalized_body_pain', false)" class="symptom-btn">No</button>
+                    </div>
+                    <div class="symptom">
+                        <label for="abdominal_pain">Abdominal Pain:</label>
+                        <button type="button" onclick="setSymptom('abdominal_pain', true)" class="symptom-btn">Yes</button>
+                        <button type="button" onclick="setSymptom('abdominal_pain', false)" class="symptom-btn">No</button>
+                    </div>
+                    <div class="symptom">
+                        <label for="loss_of_appetite">Loss of Appetite:</label>
+                        <button type="button" onclick="setSymptom('loss_of_appetite', true)" class="symptom-btn">Yes</button>
+                        <button type="button" onclick="setSymptom('loss_of_appetite', false)" class="symptom-btn">No</button>
+                    </div>
+                    <div class="symptom">
+                        <label for="joint_pain">Joint Pain:</label>
+                        <button type="button" onclick="setSymptom('joint_pain', true)" class="symptom-btn">Yes</button>
+                        <button type="button" onclick="setSymptom('joint_pain', false)" class="symptom-btn">No</button>
+                    </div>
+                    <div class="symptom">
+                        <label for="vomiting">Vomiting:</label>
+                        <button type="button" onclick="setSymptom('vomiting', true)" class="symptom-btn">Yes</button>
+                        <button type="button" onclick="setSymptom('vomiting', false)" class="symptom-btn">No</button>
+                    </div>
+                    <div class="symptom">
+                        <label for="nausea">Nausea:</label>
+                        <button type="button" onclick="setSymptom('nausea', true)" class="symptom-btn">Yes</button>
+                        <button type="button" onclick="setSymptom('nausea', false)" class="symptom-btn">No</button>
+                    </div>
+                    <div class="symptom">
+                        <label for="diarrhea">Diarrhea:</label>
+                        <button type="button" onclick="setSymptom('diarrhea', true)" class="symptom-btn">Yes</button>
+                        <button type="button" onclick="setSymptom('diarrhea', false)" class="symptom-btn">No</button>
+                    </div>
+                </form>
+                <button onclick="submitPrediction()" class="submit-btn">Submit Prediction</button>
+            </div>
+
+            <div id="results" class="results"></div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Malaria Prediction System | All Rights Reserved</p>
+    </footer>
+
+    <script>
+        const symptoms = {
+            "chill_cold": 0,
+            "headache": 0,
+            "fever": 0,
+            "generalized_body_pain": 0,
+            "abdominal_pain": 0,
+            "loss_of_appetite": 0,
+            "joint_pain": 0,
+            "vomiting": 0,
+            "nausea": 0,
+            "diarrhea": 0
+        };
+
+        // Function to set symptom value (True or False)
+        function setSymptom(symptom, value) {
+            symptoms[symptom] = value ? 1 : 0;
+
+            // Highlight the selected button
+            const buttons = document.querySelectorAll(`[onclick="setSymptom('${symptom}', true)"], [onclick="setSymptom('${symptom}', false)"]`);
+            buttons.forEach(button => button.classList.remove('active'));
+            if (value) {
+                buttons[0].classList.add('active');
+            } else {
+                buttons[1].classList.add('active');
+            }
+        }
+
+        // Submit prediction data to backend
+        async function submitPrediction() {
+            try {
+                const response = await fetch('http://127.0.0.1:5001/predict', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(symptoms)
+                });
+
+                const result = await response.json();
+                const predictionText = result.prediction === 1 ? "Positive for Malaria" : "Negative for Malaria";
+                const probaText = result.prediction_proba !== null ? `Probability: ${(result.prediction_proba * 100).toFixed(2)}%` : "Probability not available";
+
+                document.getElementById('results').innerHTML = `
+                    <p>Prediction: <strong>${predictionText}</strong></p>
+                    <p>${probaText}</p>
+                `;
+            } catch (error) {
+                console.error("Error making prediction:", error);
+                document.getElementById('results').textContent = "Error making prediction. Please try again.";
+            }
+        }
+    </script>
+</body>
+
+</html>
