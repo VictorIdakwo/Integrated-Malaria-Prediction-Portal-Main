@@ -1,1 +1,0 @@
-# Integrated-Malaria-Prediction-Portal
